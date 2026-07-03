@@ -1,21 +1,7 @@
-# Build output
 target/
-
-# IDE files
 .idea/
-*.iml
 .vscode/
-.classpath
-.project
-.settings/
-
-# OS files
+*.iml
 .DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
-# Environment files
 .env
-.env.*
+*.log
