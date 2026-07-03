@@ -26,10 +26,13 @@ public final class IncidentMapper {
         incident.setTitle(request.title());
         incident.setDescription(request.description());
         incident.setSeverity(request.severity());
-        incident.setStatus(request.status());
         incident.setAssignedTo(request.assignedTo());
+        applyStatus(incident, request.status());
+    }
 
-        if (request.status() == Status.RESOLVED || request.status() == Status.CLOSED) {
+    public static void applyStatus(Incident incident, Status status) {
+        incident.setStatus(status);
+        if (status == Status.RESOLVED || status == Status.CLOSED) {
             if (incident.getResolvedAt() == null) {
                 incident.setResolvedAt(OffsetDateTime.now());
             }
@@ -39,6 +42,10 @@ public final class IncidentMapper {
     }
 
     public static IncidentResponse toResponse(Incident incident) {
+        OffsetDateTime resolutionBoundary = incident.getResolvedAt() == null
+                ? OffsetDateTime.now()
+                : incident.getResolvedAt();
+
         return new IncidentResponse(
                 incident.getId(),
                 incident.getTitle(),
@@ -48,7 +55,9 @@ public final class IncidentMapper {
                 incident.getAssignedTo(),
                 incident.getCreatedAt(),
                 incident.getUpdatedAt(),
-                incident.getResolvedAt()
+                incident.getSlaDueAt(),
+                incident.getResolvedAt(),
+                incident.getSlaDueAt() != null && resolutionBoundary.isAfter(incident.getSlaDueAt())
         );
     }
 }

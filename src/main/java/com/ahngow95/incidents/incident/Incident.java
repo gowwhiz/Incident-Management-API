@@ -46,6 +46,9 @@ public class Incident {
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
 
+    @Column(name = "sla_due_at", nullable = false)
+    private OffsetDateTime slaDueAt;
+
     @Column(name = "resolved_at")
     private OffsetDateTime resolvedAt;
 
@@ -126,6 +129,14 @@ public class Incident {
 
     public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public OffsetDateTime getSlaDueAt() {
+        return slaDueAt;
+    }
+
+    public void setSlaDueAt(OffsetDateTime slaDueAt) {
+        this.slaDueAt = slaDueAt;
     }
 
     public OffsetDateTime getResolvedAt() {

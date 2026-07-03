@@ -14,19 +14,45 @@ public final class IncidentDtos {
     }
 
     public record CreateIncidentRequest(
-            @NotBlank @Size(max = 160) String title,
-            @NotBlank String description,
-            @NotNull Severity severity,
-            @Size(max = 120) String assignedTo
+            @NotBlank(message = "title is required")
+            @Size(max = 160, message = "title must be 160 characters or less")
+            String title,
+
+            @NotBlank(message = "description is required")
+            @Size(max = 4000, message = "description must be 4000 characters or less")
+            String description,
+
+            @NotNull(message = "severity is required")
+            Severity severity,
+
+            @Size(max = 120, message = "assignedTo must be 120 characters or less")
+            String assignedTo
     ) {
     }
 
     public record UpdateIncidentRequest(
-            @NotBlank @Size(max = 160) String title,
-            @NotBlank String description,
-            @NotNull Severity severity,
-            @NotNull Status status,
-            @Size(max = 120) String assignedTo
+            @NotBlank(message = "title is required")
+            @Size(max = 160, message = "title must be 160 characters or less")
+            String title,
+
+            @NotBlank(message = "description is required")
+            @Size(max = 4000, message = "description must be 4000 characters or less")
+            String description,
+
+            @NotNull(message = "severity is required")
+            Severity severity,
+
+            @NotNull(message = "status is required")
+            Status status,
+
+            @Size(max = 120, message = "assignedTo must be 120 characters or less")
+            String assignedTo
+    ) {
+    }
+
+    public record StatusUpdateRequest(
+            @NotNull(message = "status is required")
+            Status status
     ) {
     }
 
@@ -39,7 +65,9 @@ public final class IncidentDtos {
             String assignedTo,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
-            OffsetDateTime resolvedAt
+            OffsetDateTime slaDueAt,
+            OffsetDateTime resolvedAt,
+            boolean slaBreached
     ) {
     }
 }
